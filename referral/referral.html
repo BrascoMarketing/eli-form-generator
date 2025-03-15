@@ -277,7 +277,7 @@
             // Title & Header
             doc.setFont("helvetica", "bold");
             doc.setFontSize(18);
-            doc.text("Student Concerns Report", 105, 20, { align: "center" });
+            doc.text("Referral for Mental Health", 105, 20, { align: "center" });
             doc.setLineWidth(0.5);
             doc.line(20, 25, 190, 25);
 
@@ -308,7 +308,7 @@
 
             // Build table data with new date field
             const tableData = [
-                ["Today's Date", new Date(todayDate).toLocaleDateString('en-US', {
+                ["Date", new Date(todayDate).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
@@ -357,7 +357,7 @@
             });
 
             // Save PDF
-            const filename = `student_concerns_${studentID.replace(/\s+/g, "_").toLowerCase() || "unknown"}.pdf`;
+            const filename = `mental_health_referral_${studentID.replace(/\s+/g, "_").toLowerCase() || "unknown"}.pdf`;
             doc.save(filename);
         });
     </script>
