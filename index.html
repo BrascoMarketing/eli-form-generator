@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Form Portal</title>
     <style>
         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-family: Arial, sans-serif;
             background: #1a1a1a;
             color: #fff; 
@@ -17,7 +21,7 @@
         .container {            
             position: relative;
             text-align: center;
-            max-width: 500px;
+            max-width: 768px;
             padding: 20px;
             border-radius: 8px;
             background: linear-gradient(135deg, #222, #333);
@@ -43,20 +47,26 @@
             margin: 16px auto;
             max-width: 150px;
         }
+        .button-row {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;
+        }
         a.button {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            background: #0033a0;
+            margin: 15px 8px;
+            background: #17468f;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
             text-decoration: none;
-            padding: 1.5em;
-            border-radius: 18px;
+            padding: .5em .75em;
+            border-radius: 8px;
             text-transform: uppercase;
-            font-size: 24px;
+            font-size: 18px;
+            min-width: 200px;
         }
         a.button:hover {
             background: #a2aaad;
@@ -70,13 +80,9 @@
                 <img src="img\mascot_logo.png" alt="" class="logo">
                 <h1>Form Portal</h1>
             </div>
-            <div class="col">
-                <a href="allergies/allergies.html" class="button">Allergies</a>
-            </div>
-                <div class="col">
-                <a href="cps-intake\cps-intake.html" class="button">CPS Intake Form</a>
-            </div>
-            <div class="col">
+            <div class="col button-row">
+                <a href="allergies/allergies.html" class="button">Allergies</a>            
+                <a href="cps-intake\cps-intake.html" class="button">CPS Intake</a>            
                 <a href="referral\referral.html" class="button">Referral</a>
             </div>
             
