@@ -13,26 +13,35 @@
 
     <style>
         body {
-            box-sizing: border-box;
             font-family: Arial, sans-serif;
             background: #1a1a1a;
-            color: #fff;
-            max-width: 800px;
+            color: #fff;            
+            background: linear-gradient(135deg, #222, #333);
+            
+        }
+        .container {
+            background: #151515;
+            max-width: 880px;
             margin: 40px auto;
             padding: 20px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #222, #333);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
         }
-        h2 {
+        h1 {
             text-align: center;
-            color: #f39c12;
+            color: #efefef;
+            margin-bottom: 26px;
+        }
+        img.logo {
+            display: block;
+            margin: 16px auto;
+            max-width: 150px;
         }
         label {
             display: block;
             font-weight: bold;
             margin-top: 10px;
-            color: #f39c12;
+            color: #efefef;
         }
         input, textarea, button {
             width: 100%;
@@ -49,14 +58,15 @@
         button {
             margin-top: 20px;
             padding: .75em 1.5em;
-            background: #f39c12;
+            background: #0033a0;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            border: none;
         }
         button:hover {
-            background: #e67e22;
+            background: #a2aaad;
         }
         .checkbox-wrapper {
             display: flex;
@@ -133,106 +143,109 @@
     </style>
 </head>
 <body>
-    <h2>Referral Form</h2>
-    <form id="concernsForm">
-        <div class="form-group" style="margin-bottom: 30px;">
-            <label for="todayDate">Date:</label>
-            <input type="date" id="todayDate" name="todayDate" required>
-        </div>
+    <div class="container">
+        <img src="..\img\mascot_logo.png" alt="" class="logo">
+        <h1>Referral Form</h1>
+        <form id="concernsForm">
+            <div class="form-group" style="margin-bottom: 30px;">
+                <label for="todayDate">Date:</label>
+                <input type="date" id="todayDate" name="todayDate" required>
+            </div>
 
-        <!-- New Radio Button Section -->
-        <label>Referral for Mental Health:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="referral" value="SW" required>SW</label>
-            <label><input type="radio" name="referral" value="Counselor">Counselor</label>
-        </div>
+            <!-- New Radio Button Section -->
+            <label>Referral for Mental Health:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="referral" value="SW" required>SW</label>
+                <label><input type="radio" name="referral" value="Counselor">Counselor</label>
+            </div>
 
-        <label for="studentID">Student ID Number:</label>
-        <input type="text" id="studentID" required style="margin-bottom: 15px;">
-    
-        <label for="studentName">Student Name:</label>
-        <input type="text" id="studentName" required style="margin-bottom: 15px;">
-    
-        <label for="studentIdentification">Student Identification Number:</label>
-        <input type="text" id="studentIdentification" required style="margin-bottom: 15px;">
+            <label for="studentID">Student ID Number:</label>
+            <input type="text" id="studentID" required style="margin-bottom: 15px;">
+        
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" required style="margin-bottom: 15px;">
+        
+            <label for="studentIdentification">Student Identification Number:</label>
+            <input type="text" id="studentIdentification" required style="margin-bottom: 15px;">
 
-        <label for="referredOut">Referred Out:</label>
-        <input type="text" id="referredOut" style="margin-bottom: 30px;">
-    
-        <label><strong>Please check all areas of concern:</strong></label>
-    
-        <div class="checkbox-wrapper">
-            <div class="checkbox-group">
-                <strong>Mood</strong>
-                <label><input type="checkbox" name="concerns" value="Anger or irritability"><span>Anger or irritability</span></label>
-                <label><input type="checkbox" name="concerns" value="Anxiety or worries"><span>Anxiety or worries</span></label>
-                <label><input type="checkbox" name="concerns" value="Fearful or easily startled"><span>Fearful or easily startled</span></label>
-                <label><input type="checkbox" name="concerns" value="Feeling guilty or ashamed"><span>Feeling guilty or ashamed</span></label>
-                <label><input type="checkbox" name="concerns" value="Feeling sad, depressed, or hopeless"><span>Feeling sad, depressed, or hopeless</span></label>
-                <label><input type="checkbox" name="concerns" value="Frequent crying"><span>Frequent crying</span></label>
-                <label><input type="checkbox" name="concerns" value="Low self-esteem"><span>Low self-esteem</span></label>
-                <label><input type="checkbox" name="concerns" value="Low energy or interest in activities"><span>Low energy or interest in activities</span></label>
-                <label><input type="checkbox" name="concerns" value="Fear of separating from parents"><span>Fear of separating from parents</span></label>
+            <label for="referredOut">Referred Out:</label>
+            <input type="text" id="referredOut" style="margin-bottom: 30px;">
+        
+            <label><strong>Please check all areas of concern:</strong></label>
+        
+            <div class="checkbox-wrapper">
+                <div class="checkbox-group">
+                    <strong>Mood</strong>
+                    <label><input type="checkbox" name="concerns" value="Anger or irritability"><span>Anger or irritability</span></label>
+                    <label><input type="checkbox" name="concerns" value="Anxiety or worries"><span>Anxiety or worries</span></label>
+                    <label><input type="checkbox" name="concerns" value="Fearful or easily startled"><span>Fearful or easily startled</span></label>
+                    <label><input type="checkbox" name="concerns" value="Feeling guilty or ashamed"><span>Feeling guilty or ashamed</span></label>
+                    <label><input type="checkbox" name="concerns" value="Feeling sad, depressed, or hopeless"><span>Feeling sad, depressed, or hopeless</span></label>
+                    <label><input type="checkbox" name="concerns" value="Frequent crying"><span>Frequent crying</span></label>
+                    <label><input type="checkbox" name="concerns" value="Low self-esteem"><span>Low self-esteem</span></label>
+                    <label><input type="checkbox" name="concerns" value="Low energy or interest in activities"><span>Low energy or interest in activities</span></label>
+                    <label><input type="checkbox" name="concerns" value="Fear of separating from parents"><span>Fear of separating from parents</span></label>
+                </div>
+        
+                <div class="checkbox-group">
+                    <strong>Behavior</strong>
+                    <label><input type="checkbox" name="concerns" value="Harm to self, such as biting or cutting"><span>Harm to self, such as biting or cutting</span></label>
+                    <label><input type="checkbox" name="concerns" value="Talking about wanting to die"><span>Talking about wanting to die</span></label>
+                    <label><input type="checkbox" name="concerns" value="Changes in sleeping or eating"><span>Changes in sleeping or eating</span></label>
+                    <label><input type="checkbox" name="concerns" value="Hyperactivity or lack of attention"><span>Hyperactivity or lack of attention</span></label>
+                    <label><input type="checkbox" name="concerns" value="Refusal to listen or follow rules"><span>Refusal to listen or follow rules</span></label>
+                    <label><input type="checkbox" name="concerns" value="Verbal or physical aggression"><span>Verbal or physical aggression</span></label>
+                    <label><input type="checkbox" name="concerns" value="Withdrawn or isolated"><span>Withdrawn or isolated</span></label>
+                    <label><input type="checkbox" name="concerns" value="Repetitive play related to trauma"><span>Repetitive play related to trauma</span></label>
+                    <label><input type="checkbox" name="concerns" value="Lying, stealing, or destroying property"><span>Lying, stealing, or destroying property</span></label>
+                </div>
+        
+                <div class="checkbox-group">
+                    <strong>Home and Family</strong>
+                    <label><input type="checkbox" name="concerns" value="Death or other loss"><span>Death or other loss</span></label>
+                    <label><input type="checkbox" name="concerns" value="Illness in family"><span>Illness in family</span></label>
+                    <label><input type="checkbox" name="concerns" value="Family conflict"><span>Family conflict</span></label>
+                    <label><input type="checkbox" name="concerns" value="Separation or divorce"><span>Separation or divorce</span></label>
+                    <label><input type="checkbox" name="concerns" value="Recent move or other big change"><span>Recent move or other big change</span></label>
+                    <label><input type="checkbox" name="concerns" value="Abuse or neglect"><span>Abuse or neglect</span></label>
+                    <label><input type="checkbox" name="concerns" value="Domestic violence"><span>Domestic violence</span></label>
+                    <label><input type="checkbox" name="concerns" value="Homelessness or basic needs"><span>Homelessness or basic needs</span></label>
+                    <label><input type="checkbox" name="concerns" value="Incarceration"><span>Incarceration</span></label>
+                    <label><input type="checkbox" name="concerns" value="Alcohol or substance use"><span>Alcohol or substance use</span></label>
+                </div>
+        
+                <div class="checkbox-group">
+                    <strong>Physical Health or Appearance</strong>
+                    <label><input type="checkbox" name="concerns" value="Frequent head or stomach aches"><span>Frequent head or stomach aches</span></label>
+                    <label><input type="checkbox" name="concerns" value="Significant weight loss or gain"><span>Significant weight loss or gain</span></label>
+                    <label><input type="checkbox" name="concerns" value="Problem with hygiene"><span>Problem with hygiene</span></label>
+                    <label><input type="checkbox" name="concerns" value="Medical problem (please describe)"><span>Medical problem (please describe)</span></label>
+                </div>
+        
+                <div class="checkbox-group">
+                    <strong>Academic</strong>
+                    <label><input type="checkbox" name="concerns" value="Refusal to complete assignments"><span>Refusal to complete assignments</span></label>
+                    <label><input type="checkbox" name="concerns" value="Careless or impulsive errors"><span>Careless or impulsive errors</span></label>
+                    <label><input type="checkbox" name="concerns" value="Decline in academic performance"><span>Decline in academic performance</span></label>
+                    <label><input type="checkbox" name="concerns" value="Excessive anxiety about doing well"><span>Excessive anxiety about doing well</span></label>
+                    <label><input type="checkbox" name="concerns" value="Forgetful of tasks and materials"><span>Forgetful of tasks and materials</span></label>
+                    <label><input type="checkbox" name="concerns" value="Frequent absences"><span>Frequent absences</span></label>
+                </div>
+        
+                <div class="checkbox-group">
+                    <strong>Peer Relationships</strong>
+                    <label><input type="checkbox" name="concerns" value="Bullying"><span>Bullying</span></label>
+                    <label><input type="checkbox" name="concerns" value="Difficulty making friends"><span>Difficulty making friends</span></label>
+                    <label><input type="checkbox" name="concerns" value="Conflict with peers"><span>Conflict with peers</span></label>
+                    <label><input type="checkbox" name="concerns" value="Inappropriate behavior with peers"><span>Inappropriate behavior with peers</span></label>
+                </div>
             </div>
-    
-            <div class="checkbox-group">
-                <strong>Behavior</strong>
-                <label><input type="checkbox" name="concerns" value="Harm to self, such as biting or cutting"><span>Harm to self, such as biting or cutting</span></label>
-                <label><input type="checkbox" name="concerns" value="Talking about wanting to die"><span>Talking about wanting to die</span></label>
-                <label><input type="checkbox" name="concerns" value="Changes in sleeping or eating"><span>Changes in sleeping or eating</span></label>
-                <label><input type="checkbox" name="concerns" value="Hyperactivity or lack of attention"><span>Hyperactivity or lack of attention</span></label>
-                <label><input type="checkbox" name="concerns" value="Refusal to listen or follow rules"><span>Refusal to listen or follow rules</span></label>
-                <label><input type="checkbox" name="concerns" value="Verbal or physical aggression"><span>Verbal or physical aggression</span></label>
-                <label><input type="checkbox" name="concerns" value="Withdrawn or isolated"><span>Withdrawn or isolated</span></label>
-                <label><input type="checkbox" name="concerns" value="Repetitive play related to trauma"><span>Repetitive play related to trauma</span></label>
-                <label><input type="checkbox" name="concerns" value="Lying, stealing, or destroying property"><span>Lying, stealing, or destroying property</span></label>
-            </div>
-    
-            <div class="checkbox-group">
-                <strong>Home and Family</strong>
-                <label><input type="checkbox" name="concerns" value="Death or other loss"><span>Death or other loss</span></label>
-                <label><input type="checkbox" name="concerns" value="Illness in family"><span>Illness in family</span></label>
-                <label><input type="checkbox" name="concerns" value="Family conflict"><span>Family conflict</span></label>
-                <label><input type="checkbox" name="concerns" value="Separation or divorce"><span>Separation or divorce</span></label>
-                <label><input type="checkbox" name="concerns" value="Recent move or other big change"><span>Recent move or other big change</span></label>
-                <label><input type="checkbox" name="concerns" value="Abuse or neglect"><span>Abuse or neglect</span></label>
-                <label><input type="checkbox" name="concerns" value="Domestic violence"><span>Domestic violence</span></label>
-                <label><input type="checkbox" name="concerns" value="Homelessness or basic needs"><span>Homelessness or basic needs</span></label>
-                <label><input type="checkbox" name="concerns" value="Incarceration"><span>Incarceration</span></label>
-                <label><input type="checkbox" name="concerns" value="Alcohol or substance use"><span>Alcohol or substance use</span></label>
-            </div>
-    
-            <div class="checkbox-group">
-                <strong>Physical Health or Appearance</strong>
-                <label><input type="checkbox" name="concerns" value="Frequent head or stomach aches"><span>Frequent head or stomach aches</span></label>
-                <label><input type="checkbox" name="concerns" value="Significant weight loss or gain"><span>Significant weight loss or gain</span></label>
-                <label><input type="checkbox" name="concerns" value="Problem with hygiene"><span>Problem with hygiene</span></label>
-                <label><input type="checkbox" name="concerns" value="Medical problem (please describe)"><span>Medical problem (please describe)</span></label>
-            </div>
-    
-            <div class="checkbox-group">
-                <strong>Academic</strong>
-                <label><input type="checkbox" name="concerns" value="Refusal to complete assignments"><span>Refusal to complete assignments</span></label>
-                <label><input type="checkbox" name="concerns" value="Careless or impulsive errors"><span>Careless or impulsive errors</span></label>
-                <label><input type="checkbox" name="concerns" value="Decline in academic performance"><span>Decline in academic performance</span></label>
-                <label><input type="checkbox" name="concerns" value="Excessive anxiety about doing well"><span>Excessive anxiety about doing well</span></label>
-                <label><input type="checkbox" name="concerns" value="Forgetful of tasks and materials"><span>Forgetful of tasks and materials</span></label>
-                <label><input type="checkbox" name="concerns" value="Frequent absences"><span>Frequent absences</span></label>
-            </div>
-    
-            <div class="checkbox-group">
-                <strong>Peer Relationships</strong>
-                <label><input type="checkbox" name="concerns" value="Bullying"><span>Bullying</span></label>
-                <label><input type="checkbox" name="concerns" value="Difficulty making friends"><span>Difficulty making friends</span></label>
-                <label><input type="checkbox" name="concerns" value="Conflict with peers"><span>Conflict with peers</span></label>
-                <label><input type="checkbox" name="concerns" value="Inappropriate behavior with peers"><span>Inappropriate behavior with peers</span></label>
-            </div>
-        </div>
-    
-        <button type="submit">Generate PDF</button>
-    </form>
+        
+            <button type="submit">Generate PDF</button>
+        </form>
 
-    <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+        <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+    </div>
 
     <script>
         const { jsPDF } = window.jspdf;

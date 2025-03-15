@@ -8,26 +8,37 @@
         body {
             font-family: Arial, sans-serif;
             background: #1a1a1a;
-            color: #fff;
+            color: #fff;            
+            background: linear-gradient(135deg, #222, #333);
+            
+        }
+        .container {
+            background: #151515;
             max-width: 500px;
             margin: 40px auto;
             padding: 20px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #222, #333);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
         }
         h1 {
             color: #fff;
+            text-align: center;
+            margin-bottom: 26px;
         }
         h2 {
             text-align: center;
-            color: #f39c12;
+            color: #efefef;
+        }
+        img.logo {
+            display: block;
+            margin: 16px auto;
+            max-width: 150px;
         }
         label {
             display: block;
             font-weight: bold;
             margin-top: 10px;
-            color: #f39c12;
+            color: #efefef;
         }
         input, textarea, button {
             width: 100%;
@@ -45,14 +56,15 @@
         button {
             margin-top: 15px;
             padding: .75em 1.5em;
-            background: #f39c12;
+            background: #0033a0;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            border: none;
         }
         button:hover {
-            background: #e67e22;
+            background: #a2aaad;
         }
         a.home-button {
             display: inline-block;
@@ -71,87 +83,90 @@
     </style>
 </head>
 <body>
-    <h2>Allergies Form</h2>
-    <form id="allergiesForm" onsubmit="generatePDF(event)">
-        <div class="form-group">
-            <label for="todayDate">Date:</label>
-            <input type="date" id="todayDate" name="todayDate" required>
-        </div>
+    <div class="container">
+        <img src="..\img\mascot_logo.png" alt="" class="logo">
+        <h1>Allergies Form</h1>
+        <form id="allergiesForm" onsubmit="generatePDF(event)">
+            <div class="form-group">
+                <label for="todayDate">Date:</label>
+                <input type="date" id="todayDate" name="todayDate" required>
+            </div>
 
-        <div class="form-group">
-            <label for="studentName">Student name:</label>
-            <input type="text" id="studentName" name="studentName">
-        </div>
+            <div class="form-group">
+                <label for="studentName">Student name:</label>
+                <input type="text" id="studentName" name="studentName">
+            </div>
 
-        <div class="form-group">
-            <label for="idNumber">ID number:</label>
-            <input type="text" id="idNumber" name="idNumber">
-        </div>
+            <div class="form-group">
+                <label for="idNumber">ID number:</label>
+                <input type="text" id="idNumber" name="idNumber">
+            </div>
 
-        <div class="form-group">
-            <label for="teacher">Teacher:</label>
-            <input type="text" id="teacher" name="teacher">
-        </div>
+            <div class="form-group">
+                <label for="teacher">Teacher:</label>
+                <input type="text" id="teacher" name="teacher">
+            </div>
 
-        <div class="form-group">
-            <label for="allergy">Allergy:</label>
-            <input type="text" id="allergy" name="allergy">
-        </div>
+            <div class="form-group">
+                <label for="allergy">Allergy:</label>
+                <input type="text" id="allergy" name="allergy">
+            </div>
 
-        <div class="form-group">
-            <label for="specialDietMD">Special diet form completed by MD:</label>
-            <input type="text" id="specialDietMD" name="specialDietMD">
-        </div>
+            <div class="form-group">
+                <label for="specialDietMD">Special diet form completed by MD:</label>
+                <input type="text" id="specialDietMD" name="specialDietMD">
+            </div>
 
-        <div class="form-group">
-            <label for="specialDietParent">Special diet form completed by parent:</label>
-            <input type="text" id="specialDietParent" name="specialDietParent">
-        </div>
+            <div class="form-group">
+                <label for="specialDietParent">Special diet form completed by parent:</label>
+                <input type="text" id="specialDietParent" name="specialDietParent">
+            </div>
 
-        <div class="form-group">
-            <label for="dietitianNotified">Dietitian notified:</label>
-            <input type="text" id="dietitianNotified" name="dietitianNotified">
-        </div>
+            <div class="form-group">
+                <label for="dietitianNotified">Dietitian notified:</label>
+                <input type="text" id="dietitianNotified" name="dietitianNotified">
+            </div>
 
-        <div class="form-group">
-            <label for="cafeteriaManagerNotified">Cafeteria manager notified:</label>
-            <input type="text" id="cafeteriaManagerNotified" name="cafeteriaManagerNotified">
-        </div>
+            <div class="form-group">
+                <label for="cafeteriaManagerNotified">Cafeteria manager notified:</label>
+                <input type="text" id="cafeteriaManagerNotified" name="cafeteriaManagerNotified">
+            </div>
 
-        <div class="form-group">
-            <label for="teacherNotified">Teacher notified:</label>
-            <input type="text" id="teacherNotified" name="teacherNotified">
-        </div>
+            <div class="form-group">
+                <label for="teacherNotified">Teacher notified:</label>
+                <input type="text" id="teacherNotified" name="teacherNotified">
+            </div>
 
-        <div class="form-group">
-            <label for="administrationNotified">Administration notified:</label>
-            <input type="text" id="administrationNotified" name="administrationNotified">
-        </div>
+            <div class="form-group">
+                <label for="administrationNotified">Administration notified:</label>
+                <input type="text" id="administrationNotified" name="administrationNotified">
+            </div>
 
-        <div class="form-group">
-            <label for="epiPen">EPI Pen:</label>
-            <input type="text" id="epiPen" name="epiPen">
-        </div>
+            <div class="form-group">
+                <label for="epiPen">EPI Pen:</label>
+                <input type="text" id="epiPen" name="epiPen">
+            </div>
 
-        <div class="form-group">
-            <label for="ihpCompleted">IHP completed:</label>
-            <input type="text" id="ihpCompleted" name="ihpCompleted">
-        </div>
+            <div class="form-group">
+                <label for="ihpCompleted">IHP completed:</label>
+                <input type="text" id="ihpCompleted" name="ihpCompleted">
+            </div>
 
-        <div class="form-group">
-            <label for="scannedInSnap">Scanned in SNAP:</label>
-            <input type="text" id="scannedInSnap" name="scannedInSnap">
-        </div>
+            <div class="form-group">
+                <label for="scannedInSnap">Scanned in SNAP:</label>
+                <input type="text" id="scannedInSnap" name="scannedInSnap">
+            </div>
 
-        <div class="form-group">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" name="notes" rows="4"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" rows="4"></textarea>
+            </div>
 
-        <button type="submit">Submit and Generate PDF</button>
-    </form>
+            <button type="submit">Submit and Generate PDF</button>
+        </form>
 
-    <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+        <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+    </div>
 
     <!-- jsPDF Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

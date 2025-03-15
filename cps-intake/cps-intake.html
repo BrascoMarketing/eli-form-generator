@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local PDF Form</title>
+    <title>CPS Intake Form</title>
 
     <!-- jsPDF Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -15,23 +15,33 @@
         body {
             font-family: Arial, sans-serif;
             background: #1a1a1a;
-            color: #fff;
+            color: #fff;            
+            background: linear-gradient(135deg, #222, #333);
+            
+        }
+        .container {
+            background: #151515;
             max-width: 500px;
             margin: 40px auto;
             padding: 20px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #222, #333);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
         }
-        h2 {
+        h1 {
             text-align: center;
-            color: #f39c12;
+            color: #efefef;            
+            margin-bottom: 26px;
+        }
+        img.logo {
+            display: block;
+            margin: 16px auto;
+            max-width: 150px;
         }
         label {
             display: block;
             font-weight: bold;
             margin-top: 10px;
-            color: #f39c12;
+            color: #efefef;
         }
         input, textarea, button {
             width: 100%;
@@ -49,14 +59,15 @@
         button {
             margin-top: 15px;
             padding: .75em 1.5em;
-            background: #f39c12;
+            background: #0033a0;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            border: none;
         }
         button:hover {
-            background: #e67e22;
+            background: #a2aaad;
         }
         a.home-button {
             display: inline-block;
@@ -75,42 +86,45 @@
     </style>
 </head>
 <body>
-    <h2>CPS Intake Form</h2>
-    <form id="dataForm">
-        <label for="date">Today's Date:</label>
-        <input type="date" id="date" required>
+    <div class="container">
+        <img src="..\img\mascot_logo.png" alt="" class="logo">
+        <h1>CPS Intake Form</h1>
+        <form id="dataForm">
+            <label for="date">Today's Date:</label>
+            <input type="date" id="date" required>
 
-        <label for="operatorName">CPS Intake Operator Name:</label>
-        <input type="text" id="operatorName" required>
+            <label for="operatorName">CPS Intake Operator Name:</label>
+            <input type="text" id="operatorName" required>
 
-        <label for="operatorNumber">CPS Intake Operator Number:</label>
-        <input type="text" id="operatorNumber" required>
+            <label for="operatorNumber">CPS Intake Operator Number:</label>
+            <input type="text" id="operatorNumber" required>
 
-        <label for="reportDate">Report Date:</label>
-        <input type="date" id="reportDate" required>
+            <label for="reportDate">Report Date:</label>
+            <input type="date" id="reportDate" required>
 
-        <label for="caseNumber">Case Number:</label>
-        <input type="text" id="caseNumber" required>
+            <label for="caseNumber">Case Number:</label>
+            <input type="text" id="caseNumber" required>
 
-        <label for="studentID">Student ID Number:</label>
-        <input type="text" id="studentID" required>
+            <label for="studentID">Student ID Number:</label>
+            <input type="text" id="studentID" required>
 
-        <label for="situation">Situation:</label>
-        <textarea id="situation" required></textarea>
+            <label for="situation">Situation:</label>
+            <textarea id="situation" required></textarea>
 
-        <label for="background">Background:</label>
-        <textarea id="background" required></textarea>
+            <label for="background">Background:</label>
+            <textarea id="background" required></textarea>
 
-        <label for="assessment">Assessment:</label>
-        <textarea id="assessment" required></textarea>
+            <label for="assessment">Assessment:</label>
+            <textarea id="assessment" required></textarea>
 
-        <label for="recommendations">Recommendations:</label>
-        <textarea id="recommendations" required></textarea>
+            <label for="recommendations">Recommendations:</label>
+            <textarea id="recommendations" required></textarea>
 
-        <button type="submit">Generate PDF</button>
-    </form>
+            <button type="submit">Generate PDF</button>
+        </form>
 
-    <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+        <p style="text-align:right;"><a href="../index.html" class="home-button">Go Home</a></p>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
