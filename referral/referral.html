@@ -176,9 +176,6 @@
         
             <label for="studentName">Student Name:</label>
             <input type="text" id="studentName" required style="margin-bottom: 15px;">
-        
-            <label for="studentIdentification">Student Identification Number:</label>
-            <input type="text" id="studentIdentification" required style="margin-bottom: 15px;">
 
             <label for="referredOut">Referred Out:</label>
             <input type="text" id="referredOut" style="margin-bottom: 30px;">
@@ -262,7 +259,6 @@
     <script>
         const { jsPDF } = window.jspdf;
 
-        // Set today's date automatically (March 15, 2025)
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date('2025-03-15');
             const dateInput = document.getElementById('todayDate');
@@ -274,25 +270,20 @@
 
             const doc = new jsPDF();
 
-            // Title & Header
             doc.setFont("helvetica", "bold");
             doc.setFontSize(18);
             doc.text("Referral for Mental Health", 105, 20, { align: "center" });
             doc.setLineWidth(0.5);
             doc.line(20, 25, 190, 25);
 
-            // Helper to get input values
             const getValue = (id) => document.getElementById(id).value.trim() || "N/A";
 
-            // Get form values
             const todayDate = getValue('todayDate');
             const referral = document.querySelector('input[name="referral"]:checked')?.value || "Not specified";
             const studentID = getValue('studentID');
             const studentName = getValue('studentName');
-            const studentIdentification = getValue('studentIdentification');
             const referredOut = getValue('referredOut');
 
-            // Collect checked concerns by category
             const concernsByCategory = {};
             document.querySelectorAll('.checkbox-group').forEach(group => {
                 const category = group.querySelector('strong').textContent;
@@ -306,7 +297,6 @@
                 }
             });
 
-            // Build table data with new date field
             const tableData = [
                 ["Date", new Date(todayDate).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -316,11 +306,9 @@
                 ["Referral for Mental Health", referral],
                 ["Student ID Number", studentID],
                 ["Student Name", studentName],
-                ["Student Identification Number", studentIdentification],
                 ["Referred Out", referredOut]
             ];
 
-            // Add concerns by category to table
             if (Object.keys(concernsByCategory).length > 0) {
                 Object.entries(concernsByCategory).forEach(([category, items]) => {
                     tableData.push([category, items.join(", ")]);
@@ -329,7 +317,6 @@
                 tableData.push(["Concerns", "No concerns selected"]);
             }
 
-            // Generate table with autoTable
             doc.autoTable({
                 head: [["Field", "Value"]],
                 body: tableData,
@@ -350,13 +337,12 @@
                     1: { cellWidth: 120 }
                 },
                 didDrawCell: (data) => {
-                    if (data.row.index > 5 && data.column.index === 1) { // Adjusted index for new field
+                    if (data.row.index > 4 && data.column.index === 1) { // Adjusted index since one row was removed
                         doc.setFontSize(9);
                     }
                 }
             });
 
-            // Save PDF
             const filename = `mental_health_referral_${studentID.replace(/\s+/g, "_").toLowerCase() || "unknown"}.pdf`;
             doc.save(filename);
         });
