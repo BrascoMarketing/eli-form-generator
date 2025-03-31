@@ -260,92 +260,96 @@
         const { jsPDF } = window.jspdf;
 
         document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date('2025-03-15');
+            const today = new Date(); // Gets the current date dynamically
             const dateInput = document.getElementById('todayDate');
-            dateInput.value = today.toISOString().split('T')[0];
+            dateInput.value = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
         });
 
         document.getElementById('concernsForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const doc = new jsPDF();
+    const doc = new jsPDF();
 
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(18);
-            doc.text("Referral for Mental Health", 105, 20, { align: "center" });
-            doc.setLineWidth(0.5);
-            doc.line(20, 25, 190, 25);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("Referral for Mental Health", 105, 20, { align: "center" });
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, 190, 25);
 
-            const getValue = (id) => document.getElementById(id).value.trim() || "N/A";
+    const getValue = (id) => document.getElementById(id).value.trim() || "N/A";
 
-            const todayDate = getValue('todayDate');
-            const referral = document.querySelector('input[name="referral"]:checked')?.value || "Not specified";
-            const studentID = getValue('studentID');
-            const studentName = getValue('studentName');
-            const referredOut = getValue('referredOut');
+    const todayDate = getValue('todayDate');
+    const referral = document.querySelector('input[name="referral"]:checked')?.value || "Not specified";
+    const studentID = getValue('studentID');
+    const studentName = getValue('studentName');
+    const referredOut = getValue('referredOut');
 
-            const concernsByCategory = {};
-            document.querySelectorAll('.checkbox-group').forEach(group => {
-                const category = group.querySelector('strong').textContent;
-                const checkedItems = [];
-                group.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-                    const labelText = checkbox.nextElementSibling.textContent.trim();
-                    checkedItems.push(labelText);
-                });
-                if (checkedItems.length > 0) {
-                    concernsByCategory[category] = checkedItems;
-                }
-            });
-
-            const tableData = [
-                ["Date", new Date(todayDate).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                })],
-                ["Referral for Mental Health", referral],
-                ["Student ID Number", studentID],
-                ["Student Name", studentName],
-                ["Referred Out", referredOut]
-            ];
-
-            if (Object.keys(concernsByCategory).length > 0) {
-                Object.entries(concernsByCategory).forEach(([category, items]) => {
-                    tableData.push([category, items.join(", ")]);
-                });
-            } else {
-                tableData.push(["Concerns", "No concerns selected"]);
-            }
-
-            doc.autoTable({
-                head: [["Field", "Value"]],
-                body: tableData,
-                startY: 30,
-                theme: "grid",
-                styles: {
-                    fontSize: 10,
-                    cellPadding: 3,
-                    overflow: "linebreak"
-                },
-                headStyles: {
-                    fillColor: [0, 0, 0],
-                    textColor: [255, 255, 255],
-                    fontStyle: "bold"
-                },
-                columnStyles: {
-                    0: { cellWidth: 60, fontStyle: "bold" },
-                    1: { cellWidth: 120 }
-                },
-                didDrawCell: (data) => {
-                    if (data.row.index > 4 && data.column.index === 1) { // Adjusted index since one row was removed
-                        doc.setFontSize(9);
-                    }
-                }
-            });
-
-            const filename = `mental_health_referral_${studentID.replace(/\s+/g, "_").toLowerCase() || "unknown"}.pdf`;
-            doc.save(filename);
+    const concernsByCategory = {};
+    document.querySelectorAll('.checkbox-group').forEach(group => {
+        const category = group.querySelector('strong').textContent;
+        const checkedItems = [];
+        group.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+            const labelText = checkbox.nextElementSibling.textContent.trim();
+            checkedItems.push(labelText);
         });
+        if (checkedItems.length > 0) {
+            concernsByCategory[category] = checkedItems;
+        }
+    });
+
+    // Format the date directly from the input string
+    const [year, month, day] = todayDate.split('-');
+    const formattedDate = new Date(year, month - 1, day).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    const tableData = [
+        ["Date", formattedDate],
+        ["Referral for Mental Health", referral],
+        ["Student ID Number", studentID],
+        ["Student Name", studentName],
+        ["Referred Out", referredOut]
+    ];
+
+    if (Object.keys(concernsByCategory).length > 0) {
+        Object.entries(concernsByCategory).forEach(([category, items]) => {
+            tableData.push([category, items.join(", ")]);
+        });
+    } else {
+        tableData.push(["Concerns", "No concerns selected"]);
+    }
+
+    doc.autoTable({
+        head: [["Field", "Value"]],
+        body: tableData,
+        startY: 30,
+        theme: "grid",
+        styles: {
+            fontSize: 10,
+            cellPadding: 3,
+            overflow: "linebreak"
+        },
+        headStyles: {
+            fillColor: [0, 0, 0],
+            textColor: [255, 255, 255],
+            fontStyle: "bold"
+        },
+        columnStyles: {
+            0: { cellWidth: 60, fontStyle: "bold" },
+            1: { cellWidth: 120 }
+        },
+        didDrawCell: (data) => {
+            if (data.row.index > 4 && data.column.index === 1) {
+                doc.setFontSize(9);
+            }
+        }
+    });
+
+    const filename = `mental_health_referral_${studentID.replace(/\s+/g, "_").toLowerCase() || "unknown"}.pdf`;
+    doc.save(filename);
+});
     </script>
 </body>
 </html>
