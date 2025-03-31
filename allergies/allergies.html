@@ -187,71 +187,72 @@
 
     // Set today's date automatically (March 15, 2025)
     document.addEventListener('DOMContentLoaded', function() {
-        const today = new Date('2025-03-15'); // Current date as per system
-        const dateInput = document.getElementById('todayDate');
-        dateInput.value = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    const today = new Date(); // Gets the current date dynamically
+    const dateInput = document.getElementById('todayDate');
+    dateInput.value = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+});
+
+function generatePDF(event) {
+    event.preventDefault();
+
+    // Create a new PDF document
+    const doc = new jsPDF();
+
+    // Get form data
+    const form = document.getElementById('allergiesForm');
+    const formData = new FormData(form);
+
+    // Get the ID Number value
+    let idNumber = formData.get('idNumber') || 'unknown';
+    idNumber = idNumber.trim().replace(/\s+/g, '_').toLowerCase();
+
+    // ** Title Styling **
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("Allergies Form", 105, 20, null, null, "center");
+
+    // Draw a horizontal line below the title
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, 190, 25);
+
+    // ** Prepare Table Data **
+    let tableData = [];
+    formData.forEach((value, key) => {
+        const label = form.querySelector(`label[for="${key}"]`).textContent;
+        // Use the raw date value from the form for 'todayDate' instead of reformatting
+        if (key === 'todayDate') {
+            // Split the YYYY-MM-DD string and reformat for readability
+            const [year, month, day] = value.split('-');
+            value = new Date(year, month - 1, day).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        tableData.push([label, value || "N/A"]);
     });
 
-    function generatePDF(event) {
-        event.preventDefault();
+    // ** Generate Table with Proper Alignment **
+    doc.autoTable({
+        head: [["Field", "Value"]],
+        body: tableData,
+        startY: 30,
+        theme: "grid",
+        styles: { fontSize: 12, cellPadding: 4 },
+        headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255], fontStyle: "bold" },
+        columnStyles: {
+            0: { cellWidth: 70, fontStyle: "bold" },
+            1: { cellWidth: 110 }
+        }
+    });
 
-        // Create a new PDF document
-        const doc = new jsPDF();
+    // ** Construct the filename dynamically **
+    const fileName = `allergies_form_${idNumber}.pdf`;
 
-        // Get form data
-        const form = document.getElementById('allergiesForm');
-        const formData = new FormData(form);
-
-        // Get the ID Number value
-        let idNumber = formData.get('idNumber') || 'unknown';
-        idNumber = idNumber.trim().replace(/\s+/g, '_').toLowerCase();
-
-        // ** Title Styling **
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(18);
-        doc.text("Allergies Form", 105, 20, null, null, "center");
-
-        // Draw a horizontal line below the title
-        doc.setDrawColor(0);
-        doc.setLineWidth(0.5);
-        doc.line(20, 25, 190, 25);
-
-        // ** Prepare Table Data **
-        let tableData = [];
-        formData.forEach((value, key) => {
-            const label = form.querySelector(`label[for="${key}"]`).textContent;
-            // Format date nicely for PDF
-            if (key === 'todayDate') {
-                const date = new Date(value);
-                value = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            }
-            tableData.push([label, value || "N/A"]);
-        });
-
-        // ** Generate Table with Proper Alignment **
-        doc.autoTable({
-            head: [["Field", "Value"]],
-            body: tableData,
-            startY: 30,
-            theme: "grid",
-            styles: { fontSize: 12, cellPadding: 4 },
-            headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255], fontStyle: "bold" },
-            columnStyles: {
-                0: { cellWidth: 70, fontStyle: "bold" },
-                1: { cellWidth: 110 }
-            }
-        });
-
-        // ** Construct the filename dynamically **
-        const fileName = `allergies_form_${idNumber}.pdf`;
-
-        // ** Save the PDF with proper formatting **
-        doc.save(fileName);
-    }
+    // ** Save the PDF with proper formatting **
+    doc.save(fileName);
+}
 </script>
 </body>
 </html>
