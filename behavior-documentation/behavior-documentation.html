@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <title>Behavior Documentation</title>
+
+  <!-- jsPDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- jsPDF AutoTable Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      background: linear-gradient(135deg, #222, #333);
+    }
+    .container {
+      background: #151515;
+      max-width: 880px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      text-align: center;
+      color: #efefef;
+      margin-bottom: 26px;
+    }
+    img.logo {
+      display: block;
+      margin: 16px auto;
+      max-width: 150px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #efefef;
+      font-size: 18px;
+      line-height: 1.4em;
+    }
+    input, textarea, button, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      box-sizing: border-box;
+      background: #444;
+      color: #fff;
+      border: 1px solid #666;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 20px;
+      padding: .75em 1.5em;
+      background: #17468f;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: none;
+    }
+    button:hover {
+      background: #a2aaad;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 760px) {
+      .row { grid-template-columns: 1fr; }
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      margin-top: 0;
+      color: #fff;
+    }
+    .radio-group input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      margin: 0 8px 0 0;
+    }
+
+    .section-title {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid #2b2b2b;
+      color: #6ea8fe;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      flex-flow: row wrap;
+      padding-top: 8px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-flow: row wrap;
+      align-content: flex-start;
+      width: 50%;
+      flex-basis: 50%;
+      margin-bottom: 30px;
+    }
+    .checkbox-group:nth-child(odd) {
+      padding-right: 30px;
+      flex-basis: calc(50% - 30px);
+    }
+    @media (max-width: 760px) {
+      .checkbox-group,
+      .checkbox-group:nth-child(odd) {
+        width: 100%;
+        flex-basis: 100%;
+        padding-right: 0;
+      }
+    }
+    .checkbox-group strong {
+      display: block;
+      width: 100%;
+      flex-basis: 100%;
+      color: #6ea8fe;
+      margin-bottom: 6px;
+    }
+    .checkbox-group label {
+      position: relative;
+      left: -6px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      font-weight: 400;
+      color: #9da6b3;
+      font-size: 16px;
+      padding: 3px 6px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      margin-top: 0;
+    }
+    .checkbox-group label:hover {
+      border: 1px solid #6ea8fe;
+    }
+    .checkbox-group label input {
+      order: 1;
+      width: 22px;
+      height: 22px;
+      margin: 0 12px 0 0;
+    }
+    .checkbox-group label span {
+      order: 2;
+      flex-basis: calc(100% - 34px);
+    }
+
+    .hint {
+      color: #9da6b3;
+      font-size: 14px;
+      margin-top: 6px;
+      line-height: 1.4em;
+    }
+    .hint a { color: #6ea8fe; }
+    .disabled {
+      opacity: 0.55;
+    }
+
+    a.home-button {
+      display: inline-block;
+      padding: 6px;
+      margin: 36px 0 0 0;
+      background: #282727;
+      text-decoration: none;
+      color: #666;
+      border-radius: 4px;
+      transition: all .2s ease;
+    }
+    a.home-button:hover {
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="..\img\mascot_logo.png" alt="" class="logo" />
+    <h1>Behavior Documentation</h1>
+
+    <form id="behaviorForm">
+      <!-- Incident details -->
+      <div class="row">
+        <div>
+          <label for="incidentDateTime">Date and time of incident:</label>
+          <input
+            type="datetime-local"
+            id="incidentDateTime"
+            name="incidentDateTime"
+            required
+            data-pdf="1"
+            data-label="Date and time of incident"
+          />
+        </div>
+
+        <div>
+          <label>Code orange called (yes or no):</label>
+          <div class="radio-group" style="margin-bottom: 0;">
+            <label>
+              <input
+                type="radio"
+                name="codeOrangeCalled"
+                value="Yes"
+                required
+                data-pdf-radio="codeOrangeCalled"
+                data-label="Code orange called"
+              />Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="codeOrangeCalled"
+                value="No"
+                data-pdf-radio="codeOrangeCalled"
+                data-label="Code orange called"
+              />No
+            </label>
+          </div>
+
+          <label for="codeOrangeDateTime" style="margin-top: 8px;">Code orange time and date:</label>
+          <input
+            type="datetime-local"
+            id="codeOrangeDateTime"
+            name="codeOrangeDateTime"
+            disabled
+            class="disabled"
+            data-pdf="1"
+            data-label="Code orange time and date"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="studentName">Name of student:</label>
+          <input
+            type="text"
+            id="studentName"
+            name="studentName"
+            required
+            data-pdf="1"
+            data-label="Name of student"
+          />
+        </div>
+
+        <div>
+          <label for="teacherName">Teacher:</label>
+          <input
+            type="text"
+            id="teacherName"
+            name="teacherName"
+            required
+            data-pdf="1"
+            data-label="Teacher"
+          />
+        </div>
+      </div>
+
+      <label for="behaviorNarrative" style="margin-top: 18px;">Behaviors (describe what you see):</label>
+      <textarea
+        id="behaviorNarrative"
+        name="behaviorNarrative"
+        data-pdf="1"
+        data-label="Behaviors - narrative"
+        placeholder="Type observable behaviors, context, triggers, and what occurred..."
+      ></textarea>
+
+      <!-- Behaviors checkboxes -->
+      <div class="section-title">Behaviors (check all that apply)</div>
+      <div class="checkbox-wrapper">
+        <div class="checkbox-group pdf-checkbox-group" data-group-label="Behaviors (checked)">
+          <strong>Behaviors</strong>
+          <label><input type="checkbox" name="behaviors" value="Kicking"><span>Kicking</span></label>
+          <label><input type="checkbox" name="behaviors" value="Hitting"><span>Hitting</span></label>
+          <label><input type="checkbox" name="behaviors" value="Punching"><span>Punching</span></label>
+          <label><input type="checkbox" name="behaviors" value="Yelling"><span>Yelling</span></label>
+          <label><input type="checkbox" name="behaviors" value="Throwing objects"><span>Throwing objects</span></label>
+          <label><input type="checkbox" name="behaviors" value="Screaming"><span>Screaming</span></label>
+          <label><input type="checkbox" name="behaviors" value="Attempting to elope"><span>Attempting to elope</span></label>
+          <label><input type="checkbox" name="behaviors" value="Unretractable"><span>Unretractable</span></label>
+          <label><input type="checkbox" name="behaviors" value="Slapping"><span>Slapping</span></label>
+          <label><input type="checkbox" name="behaviors" value="Biting"><span>Biting</span></label>
+          <label><input type="checkbox" name="behaviors" value="Pushing"><span>Pushing</span></label>
+          <label><input type="checkbox" name="behaviors" value="Shoving"><span>Shoving</span></label>
+          <label><input type="checkbox" name="behaviors" value="Scratching"><span>Scratching</span></label>
+          <label><input type="checkbox" name="behaviors" value="Pinching"><span>Pinching</span></label>
+          <label><input type="checkbox" name="behaviors" value="Head-butting"><span>Head-butting</span></label>
+          <label><input type="checkbox" name="behaviors" value="Tripping others"><span>Tripping others</span></label>
+          <label><input type="checkbox" name="behaviors" value="Grabbing or pulling hair"><span>Grabbing or pulling hair</span></label>
+          <label><input type="checkbox" name="behaviors" value="Throwing objects at people"><span>Throwing objects at people</span></label>
+          <label><input type="checkbox" name="behaviors" value="Using objects as weapons"><span>Using objects as weapons</span></label>
+          <label><input type="checkbox" name="behaviors" value="Attempting to strike staff or peers"><span>Attempting to strike staff or peers</span></label>
+
+          <label style="margin-top: 12px; font-weight: 700; color:#efefef;">Other:</label>
+          <input
+            type="text"
+            id="behaviorsOther"
+            name="behaviorsOther"
+            placeholder="Other behavior..."
+            data-pdf="1"
+            data-label="Behaviors - other"
+          />
+        </div>
+      </div>
+
+      <!-- Interventions -->
+      <div class="section-title">Interventions (check all that apply)</div>
+      <div class="checkbox-wrapper">
+        <div class="checkbox-group pdf-checkbox-group" data-group-label="Interventions (checked)">
+          <strong>Interventions</strong>
+          <label><input type="checkbox" name="interventions" value="Distraction"><span>Distraction</span></label>
+          <label><input type="checkbox" name="interventions" value="Redirection"><span>Redirection</span></label>
+          <label><input type="checkbox" name="interventions" value="Sonic Pillow"><span>Sonic Pillow</span></label>
+          <label><input type="checkbox" name="interventions" value="Bean Bag"><span>Bean Bag</span></label>
+          <label><input type="checkbox" name="interventions" value="Calming room"><span>Calming room</span></label>
+          <label><input type="checkbox" name="interventions" value="Music"><span>Music</span></label>
+          <label><input type="checkbox" name="interventions" value="Dimming lights"><span>Dimming lights</span></label>
+          <label><input type="checkbox" name="interventions" value="Breathing techniques"><span>Breathing techniques</span></label>
+          <label><input type="checkbox" name="interventions" value="Reduce distractions"><span>Reduce distractions</span></label>
+          <label><input type="checkbox" name="interventions" value="Timer"><span>Timer</span></label>
+          <label><input type="checkbox" name="interventions" value="Replacement behavior - allowed student choice"><span>Replacement behavior - allowed student choice</span></label>
+          <label><input type="checkbox" name="interventions" value="Snacks"><span>Snacks</span></label>
+
+          <label style="margin-top: 12px; font-weight: 700; color:#efefef;">Snacks - type of food provided:</label>
+          <input
+            type="text"
+            id="snacksType"
+            name="snacksType"
+            placeholder="Type of food..."
+            data-pdf="1"
+            data-label="Snacks - type of food provided"
+          />
+        </div>
+      </div>
+
+      <div class="hint">
+        Websites for relaxation skills:
+        <div style="margin-top: 6px;">
+          <div>Box breathing animation: <a href="https://www.youtube.com/watch?v=AOL3isokmY4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=AOL3isokmY4</a></div>
+          <div>Sensory Soothing Visual Therapy: <a href="https://www.youtube.com/watch?v=xir91dOrO64&feature=emb_title" target="_blank" rel="noopener">https://www.youtube.com/watch?v=xir91dOrO64&feature=emb_title</a></div>
+        </div>
+      </div>
+
+      <!-- Toys -->
+      <div class="section-title">Toys (check all that apply)</div>
+      <div class="checkbox-wrapper">
+        <div class="checkbox-group pdf-checkbox-group" data-group-label="Toys (checked)">
+          <strong>Toys</strong>
+          <label><input type="checkbox" name="toys" value="Playdoh"><span>Playdoh</span></label>
+          <label><input type="checkbox" name="toys" value="Sonic Pillow"><span>Sonic Pillow</span></label>
+          <label><input type="checkbox" name="toys" value="Fidgets"><span>Fidgets</span></label>
+
+          <label style="margin-top: 12px; font-weight: 700; color:#efefef;">Other:</label>
+          <input
+            type="text"
+            id="toysOther"
+            name="toysOther"
+            placeholder="Other toy..."
+            data-pdf="1"
+            data-label="Toys - other"
+          />
+        </div>
+      </div>
+
+      <!-- Crisis Team -->
+      <div class="section-title">Crisis Team</div>
+      <div class="row">
+        <div>
+          <label for="crisisTeacher">Teacher:</label>
+          <input type="text" id="crisisTeacher" name="crisisTeacher" data-pdf="1" data-label="Crisis Team - Teacher" />
+        </div>
+        <div>
+          <label for="crisisParaprofessional">Paraprofessional:</label>
+          <input type="text" id="crisisParaprofessional" name="crisisParaprofessional" data-pdf="1" data-label="Crisis Team - Paraprofessional" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="crisisCounselor">Counselor:</label>
+          <input type="text" id="crisisCounselor" name="crisisCounselor" data-pdf="1" data-label="Crisis Team - Counselor" />
+        </div>
+        <div>
+          <label for="crisisSocialWorker">Social Worker:</label>
+          <input type="text" id="crisisSocialWorker" name="crisisSocialWorker" data-pdf="1" data-label="Crisis Team - Social Worker" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="crisisAdmin">Admin:</label>
+          <input type="text" id="crisisAdmin" name="crisisAdmin" data-pdf="1" data-label="Crisis Team - Admin" />
+        </div>
+        <div>
+          <label for="crisisNurse">Nurse:</label>
+          <input type="text" id="crisisNurse" name="crisisNurse" data-pdf="1" data-label="Crisis Team - Nurse" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="crisisOfficer">Officer:</label>
+          <input type="text" id="crisisOfficer" name="crisisOfficer" data-pdf="1" data-label="Crisis Team - Officer" />
+        </div>
+        <div>
+          <label for="reevaluationTime">Re-evaluation time:</label>
+          <input type="time" id="reevaluationTime" name="reevaluationTime" data-pdf="1" data-label="Re-evaluation time" />
+        </div>
+      </div>
+
+      <!-- Re-evaluation / Calm -->
+      <div class="section-title">Re-evaluation (check all that apply)</div>
+      <div class="checkbox-wrapper">
+        <div class="checkbox-group pdf-checkbox-group" data-group-label="Re-evaluation (checked)">
+          <strong>Calm / Stable Indicators</strong>
+          <label><input type="checkbox" name="reeval" value="Calm"><span>Calm</span></label>
+          <label><input type="checkbox" name="reeval" value="Cooperative"><span>Cooperative</span></label>
+          <label><input type="checkbox" name="reeval" value="Redirectable"><span>Redirectable</span></label>
+          <label><input type="checkbox" name="reeval" value="No hitting, kicking, biting, or throwing objects"><span>No hitting, kicking, biting, or throwing objects</span></label>
+          <label><input type="checkbox" name="reeval" value="Appropriate activity"><span>Appropriate activity</span></label>
+          <label><input type="checkbox" name="reeval" value="Body posture relaxed (no clenched fists, stiff arms, or pacing)"><span>Body posture relaxed (no clenched fists, stiff arms, or pacing)</span></label>
+          <label><input type="checkbox" name="reeval" value="Decreased restlessness or pacing"><span>Decreased restlessness or pacing</span></label>
+          <label><input type="checkbox" name="reeval" value="Sits or stands without attempting to leave area"><span>Sits or stands without attempting to leave area</span></label>
+          <label><input type="checkbox" name="reeval" value="Accepts personal space boundaries"><span>Accepts personal space boundaries</span></label>
+          <label><input type="checkbox" name="reeval" value="No attempts to strike staff or peers"><span>No attempts to strike staff or peers</span></label>
+          <label><input type="checkbox" name="reeval" value="Accepts directions without conflict"><span>Accepts directions without conflict</span></label>
+        </div>
+      </div>
+
+      <!-- Return to class + Reward -->
+      <div class="section-title">Return to class (if stable)</div>
+      <div class="row">
+        <div>
+          <label for="timeReturnedToClass">Time returned to class:</label>
+          <input type="time" id="timeReturnedToClass" name="timeReturnedToClass" data-pdf="1" data-label="Time returned to class" />
+        </div>
+        <div></div>
+      </div>
+
+      <div class="checkbox-wrapper">
+        <div class="checkbox-group pdf-checkbox-group" data-group-label="Reward for positive behavior (checked)">
+          <strong>Reward for positive behavior</strong>
+          <label><input type="checkbox" name="reward" value="Positive note to parent/guardian"><span>Positive note to parent/guardian</span></label>
+          <label><input type="checkbox" name="reward" value="Positive praise"><span>Positive praise</span></label>
+          <label><input type="checkbox" name="reward" value="Concrete reinforcement (rewards/edibles)"><span>Concrete reinforcement (rewards/edibles)</span></label>
+          <label><input type="checkbox" name="reward" value="iPad use"><span>iPad use</span></label>
+          <label><input type="checkbox" name="reward" value="Choice board based on student interests"><span>Choice board based on student interests</span></label>
+        </div>
+      </div>
+
+      <!-- Mother made aware -->
+      <div class="section-title">Parent/Guardian Notification</div>
+      <div class="row">
+        <div>
+          <label for="motherAwareDateTime">Mother made aware (time and date):</label>
+          <input
+            type="datetime-local"
+            id="motherAwareDateTime"
+            name="motherAwareDateTime"
+            data-pdf="1"
+            data-label="Mother made aware (time and date)"
+          />
+        </div>
+        <div>
+          <label for="whoCalledMother">Who called mother:</label>
+          <input
+            type="text"
+            id="whoCalledMother"
+            name="whoCalledMother"
+            data-pdf="1"
+            data-label="Who called mother"
+          />
+        </div>
+      </div>
+
+      <button type="submit">Generate PDF</button>
+    </form>
+
+    <p style="text-align:right;">
+      <a href="../index.html" class="home-button">Go Home</a>
+    </p>
+  </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    function pad2(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function toLocalDateTimeValue(d) {
+      // YYYY-MM-DDTHH:MM for datetime-local
+      const yyyy = d.getFullYear();
+      const mm = pad2(d.getMonth() + 1);
+      const dd = pad2(d.getDate());
+      const hh = pad2(d.getHours());
+      const min = pad2(d.getMinutes());
+      return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+    }
+
+    function formatDateTimeFromInput(value) {
+      if (!value) return "N/A";
+
+      // datetime-local value is "YYYY-MM-DDTHH:MM"
+      const dt = new Date(value);
+      if (isNaN(dt.getTime())) return value;
+
+      return dt.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+
+    function formatTimeFromInput(value) {
+      if (!value) return "N/A";
+      // value is "HH:MM"
+      const [h, m] = value.split(":");
+      if (h == null || m == null) return value;
+      const dt = new Date();
+      dt.setHours(Number(h), Number(m), 0, 0);
+      return dt.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+    }
+
+    function getTextValue(el) {
+      if (!el) return "N/A";
+      const v = (el.value ?? "").trim();
+      return v ? v : "N/A";
+    }
+
+    function collectPdfFields(formEl) {
+      const rows = [];
+
+      // Standard fields tagged with data-pdf="1"
+      const pdfFields = formEl.querySelectorAll('[data-pdf="1"]');
+      pdfFields.forEach((field) => {
+        const label = field.getAttribute("data-label") || field.id || field.name || "Field";
+        let value = getTextValue(field);
+
+        if (field.type === "datetime-local") value = formatDateTimeFromInput(field.value);
+        if (field.type === "time") value = formatTimeFromInput(field.value);
+
+        // If field is disabled, treat empty as N/A (keeps PDF cleaner)
+        if (field.disabled && (!field.value || !field.value.trim())) value = "N/A";
+
+        rows.push([label, value]);
+      });
+
+      // Radio groups tagged with data-pdf-radio
+      const radioEls = formEl.querySelectorAll("[data-pdf-radio]");
+      const groups = new Map();
+
+      radioEls.forEach((r) => {
+        const groupKey = r.getAttribute("data-pdf-radio");
+        const label = r.getAttribute("data-label") || groupKey || "Radio";
+        const name = r.name || groupKey;
+        if (!groups.has(groupKey)) groups.set(groupKey, { label, name });
+      });
+
+      groups.forEach(({ label, name }) => {
+        const selected = formEl.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`);
+        rows.push([label, selected ? selected.value : "Not specified"]);
+      });
+
+      return rows;
+    }
+
+    function collectCheckboxGroups(formEl) {
+      const rows = [];
+
+      formEl.querySelectorAll(".pdf-checkbox-group").forEach((group) => {
+        const label =
+          group.getAttribute("data-group-label") ||
+          group.querySelector("strong")?.textContent?.trim() ||
+          "Selections";
+
+        const checkedItems = [];
+        group.querySelectorAll('input[type="checkbox"]:checked').forEach((cb) => {
+          const text = cb.nextElementSibling?.textContent?.trim();
+          if (text) checkedItems.push(text);
+        });
+
+        rows.push([label, checkedItems.length ? checkedItems.join(", ") : "None selected"]);
+      });
+
+      return rows;
+    }
+
+    function setupCodeOrangeToggle() {
+      const yes = document.querySelector('input[name="codeOrangeCalled"][value="Yes"]');
+      const no = document.querySelector('input[name="codeOrangeCalled"][value="No"]');
+      const dt = document.getElementById("codeOrangeDateTime");
+
+      function update() {
+        const isYes = !!document.querySelector('input[name="codeOrangeCalled"]:checked')?.value?.includes("Yes");
+        if (!dt) return;
+
+        dt.disabled = !isYes;
+        dt.classList.toggle("disabled", !isYes);
+        dt.required = isYes;
+
+        if (!isYes) dt.value = "";
+      }
+
+      if (yes) yes.addEventListener("change", update);
+      if (no) no.addEventListener("change", update);
+      update();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // Prepopulate incident date + time with now
+      const now = new Date();
+      const incident = document.getElementById("incidentDateTime");
+      if (incident) incident.value = toLocalDateTimeValue(now);
+
+      setupCodeOrangeToggle();
+    });
+
+    document.getElementById("behaviorForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const formEl = event.currentTarget;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("Behavior Documentation", 105, 20, { align: "center" });
+      doc.setLineWidth(0.5);
+      doc.line(20, 25, 190, 25);
+
+      const tableData = [];
+
+      // Fields + radios
+      tableData.push(...collectPdfFields(formEl));
+
+      // Checkbox groups as rows
+      tableData.push(...collectCheckboxGroups(formEl));
+
+      doc.autoTable({
+        head: [["Field", "Value"]],
+        body: tableData,
+        startY: 30,
+        theme: "grid",
+        styles: {
+          fontSize: 10,
+          cellPadding: 3,
+          overflow: "linebreak"
+        },
+        headStyles: {
+          fillColor: [0, 0, 0],
+          textColor: [255, 255, 255],
+          fontStyle: "bold"
+        },
+        columnStyles: {
+          0: { cellWidth: 65, fontStyle: "bold" },
+          1: { cellWidth: 115 }
+        }
+      });
+
+      const studentName = (document.getElementById("studentName")?.value || "").trim();
+      const safeStudent = studentName ? studentName.replace(/\s+/g, "_").toLowerCase() : "student";
+      const filename = `behavior_documentation_${safeStudent}.pdf`;
+
+      doc.save(filename);
+    });
+  </script>
+</body>
+</html>
